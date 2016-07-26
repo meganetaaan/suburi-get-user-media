@@ -10,10 +10,14 @@
       var onFailSoHard = function(e){
         console.log('rejected', e);
       };
-navigator.getUserMedia('audio, video', function(localMediaStream){
-  var video = document.querySelector('video');
-  video.src = window.webkitURL.createObjectURL(localMediaStream);
-}, onFailSoHard);
+navigator.getUserMedia(
+    {audio: true,
+      video: true},
+      function(localMediaStream){
+        var video = document.querySelector('video');
+        video.src = window.webkitURL.createObjectURL(localMediaStream);
+      },
+      onFailSoHard);
     </script>
   </body>
 </html>
