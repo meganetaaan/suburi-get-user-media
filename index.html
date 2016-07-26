@@ -7,10 +7,13 @@
   <body>
     <video autoplay></video>
     <script>
-      navigator.getUserMedia('audio, video', function(localMediaStream){
-        var video = document.querySelector('video');
-        video.src = window.webkitURL.createObjectURL(localMediaStream);
-      });
+      var onFailSoHard = function(e){
+        console.log('rejected', e);
+      };
+navigator.getUserMedia('audio, video', function(localMediaStream){
+  var video = document.querySelector('video');
+  video.src = window.webkitURL.createObjectURL(localMediaStream);
+}, onFailSoHard);
     </script>
   </body>
 </html>
