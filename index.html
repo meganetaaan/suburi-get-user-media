@@ -4,54 +4,10 @@
     <meta charset="UTF-8">
     <title></title>
   </head>
-  <body>
+  <body style="background-color: #888888">
     <video style="display:none;" autoplay></video>
-    <canvas style="position: absolute; margin: 0; padding: 0; width: 100%; height: 100%;"></canvas>
-    <script>
-      var onFailSoHard = function(e){
-        console.log('rejected', e);
-      };
-navigator.getUserMedia(
-    {video: true},
-    function(localMediaStream){
-      var video = document.querySelector('video');
-      video.src = window.URL.createObjectURL(localMediaStream);
-    },
-    onFailSoHard);
-
-var video = document.querySelector('video');
-var canvas = document.querySelector('canvas');
-var context = canvas.getContext('2d');
-
-var drawVideo = function(){
-  var h = canvas.height;
-  var w = canvas.width;
-  context.drawImage(video, 0, 0, w, h);
-
-  var gray = new Uint8ClampedArray(w*h);
-  var imageData = context.getImageData(0, 0, w, h);
-  colorToThreshold(imageData.data, 100);
-  context.putImageData(imageData, 0, 0);
-};
-
-function colorToThreshold(color, th){
-  for (var i = 0; i < color.length; i += 4) {
-    g = 0.299*color[i+0]
-      + 0.587*color[i+1]
-      + 0.114*color[i+2];
-    if( g > th){
-      color[i+0] = color[i+1] = color[i+2] = 255;
-    } else{
-      color[i+0] = color[i+1] = color[i+2] = 0;
-    }
-  }
-}
-
-function animLoop(){
-  drawVideo();
-  requestAnimationFrame(animLoop);
-};
-window.onload = animLoop;
-    </script>
+    <canvas class="src-canvas" style="position: absolute; margin: 0; padding: 0; top: 0px; left: 0px; width: 50%; height: 50%;"></canvas>
+    <canvas class="dest-canvas"style="position: absolute; margin: 0; padding: 0; right: 0px; bottom: 0px; width: 50%; height: 50%;"></canvas>
+    <script src='./index.js'></script>
   </body>
 </html>
