@@ -1,7 +1,20 @@
 var onFailSoHard = function(e){
   console.log('rejected', e);
 };
-navigator.getUserMedia(
+
+var getUserMedia;
+if(navigator.getUserMedia){
+  getUserMedia = navigator.getUserMedia;
+} else if (navigator.mozGetUserMedia) {
+  getUserMedia = navigator.mozGetUserMedia;
+} else if (navigator.webkitGetUserMedia) {
+  getUserMedia = navigator.webkitGetUserMedia;
+} else if (navigator.msGetUserMedia) {
+  getUserMedia = navigator.msGetUserMedia;
+} else {
+  console.error('getUserMedia not supported in your browser');
+}
+getUserMedia(
   {video: true},
   function(localMediaStream){
     var video = document.querySelector('video');
